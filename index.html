@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Préstamo de Libro Escolar</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f1f1f1;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .admin-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .admin-button {
+      background: #28a745;
+      color: #fff;
+      padding: 10px 15px;
+      font-size: 14px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .admin-button:hover {
+      background: #218838;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      max-width: 100%;
+      width: 320px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+    }
+
+    form h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    input, select, button[type="submit"] {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button[type="submit"] {
+      background: #24315e;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background: #0056b3;
+    }
+
+    #nivelEducativo {
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .mensaje {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
+
+    .mascota-box {
+      max-width: 100%;
+      width: 320px;
+      height: 420px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .mascota-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .footer-banner {
+      margin-top: 40px;
+      width: 100%;
+      background: #24315e;
+      height: 120px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .footer-banner img {
+      max-height: 80%;
+      max-width: 90%;
+      object-fit: contain;
+    }
+
+    /* Responsive: para pantallas pequeñas */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      form, .mascota-box {
+        width: 100%;
+      }
+
+      .main-container {
+        gap: 20px;
+      }
+
+      .admin-button {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+
+      input, select, button[type="submit"] {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .footer-banner {
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <a href="login-admin.html" class="admin-button">Administrador</a>
+  </div>
+
+  <div class="main-container">
+    <form id="formularioPrestamo">
+      <h2>Formulario de Préstamo de Libro</h2>
+
+      <input type="text" name="nombre" placeholder="Nombre completo" required>
+
+      <select name="carrera" id="carrera" required>
+        <option value="">Selecciona tu carrera</option>
+        <option value="Bachillerato en Informática">Bachillerato en Informática</option>
+        <option value="Bachillerato en Enfermería General">Bachillerato en Enfermería General</option>
+        <option value="Bachillerato en Contabilidad">Bachillerato en Contabilidad</option>
+        <option value="Bachillerato en Administración">Bachillerato en Administración</option>
+        <option value="Bachillerato en Turismo">Bachillerato en Turismo</option>
+        <option value="Bachillerato en Diseño Gráfico">Bachillerato en Diseño Gráfico</option>
+        <option value="Bachillerato en Criminalística">Bachillerato en Criminalística</option>
+        <option value="Bachillerato en Trabajo Social">Bachillerato en Trabajo Social</option>
+        <option value="Bachillerato en Educación Preescolar">Bachillerato en Educación Preescolar</option>
+        <option value="Licenciatura en Fisioterapia">Licenciatura en Fisioterapia</option>
+        <option value="Licenciatura en Pedagogía">Licenciatura en Pedagogía</option>
+        <option value="Licenciatura en Enfermería">Licenciatura en Enfermería</option>
+        <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+        <option value="Maestría en Administración">Maestría en Administración</option>
+        <option value="Maestría en Derecho Fiscal">Maestría en Derecho Fiscal</option>
+        <option value="Maestría en Educación">Maestría en Educación</option>
+        <option value="Maestría en Psicología de la Salud">Maestría en Psicología de la Salud</option>
+      </select>
+
+      <div id="nivelEducativo"></div>
+
+      <input type="date" name="prestamo" required>
+      <input type="date" name="devolucion" required>
+      <input type="text" name="titulo" placeholder="Título del libro" required>
+
+      <select name="estado" required>
+        <option value="">Estado del libro</option>
+        <option value="Nuevo">Nuevo</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Malo">Malo</option>
+      </select>
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <div class="mascota-box">
+      <img src="/img/mascota.png" alt="Mascota de la escuela">
+    </div>
+  </div>
+
+  <div class="mensaje" id="mensaje"></div>
+
+  <div class="footer-banner">
+    <img src="/img/GE_USYC.png" alt="Logo de la escuela">
+  </div>
+
+  <script>
+    const nivelEducativoDiv = document.getElementById('nivelEducativo');
+    const carreraSelect = document.getElementById('carrera');
+
+    const nivelesEducativos = {
+      "Bachillerato en Informática":"Media Superior",
+      "Bachillerato en Enfermería General":"Media Superior",
+      "Bachillerato en Contabilidad":"Media Superior",
+      "Bachillerato en Administración":"Media Superior",
+      "Bachillerato en Turismo":"Media Superior",
+      "Bachillerato en Diseño Gráfico":"Media Superior",
+      "Bachillerato en Criminalística":"Media Superior",
+      "Bachillerato en Trabajo Social":"Media Superior",
+      "Bachillerato en Educación Preescolar":"Media Superior",
+      "Licenciatura en Fisioterapia":"Superior",
+      "Licenciatura en Pedagogía":"Superior",
+      "Licenciatura en Enfermería":"Superior",
+      "Ingeniería Industrial":"Superior",
+      "Maestría en Administración":"Posgrado",
+      "Maestría en Derecho Fiscal":"Posgrado",
+      "Maestría en Educación":"Posgrado",
+      "Maestría en Psicología de la Salud":"Posgrado"
+    };
+
+    carreraSelect.addEventListener('change', () => {
+      const nivel = nivelesEducativos[carreraSelect.value] || '';
+      nivelEducativoDiv.textContent = nivel ? `Nivel educativo: ${nivel}` : '';
+    });
+
+    document.getElementById("formularioPrestamo").addEventListener("submit", function(e){
+      e.preventDefault();
+      const datos = {
+        nombre: this.nombre.value,
+        carrera: this.carrera.value,
+        nivel: nivelesEducativos[this.carrera.value] || '',
+        prestamo: this.prestamo.value,
+        devolucion: this.devolucion.value,
+        titulo: this.titulo.value,
+        estado: this.estado.value
+      };
+      const registros = JSON.parse(localStorage.getItem("prestamosLibros")) || [];
+      registros.push(datos);
+      localStorage.setItem("prestamosLibros", JSON.stringify(registros));
+      document.getElementById("mensaje").textContent = `Debes regresar el libro el día ${datos.devolucion}.`;
+      this.reset();
+      nivelEducativoDiv.textContent = '';
+    });
+  </script>
+</body>
+</html>

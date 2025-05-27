@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administración</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background: #f1f1f1;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    h2 {
+      margin: 0;
+    }
+
+    .salir-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .salir-btn:hover {
+      background-color: #c82333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 10px;
+      }
+
+      td {
+        border: none;
+        padding: 8px 10px;
+        position: relative;
+        text-align: left;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>Registros de Préstamo</h2>
+    <button class="salir-btn" onclick="window.location.href='index.html'">Salir</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Carrera</th>
+        <th>Nivel</th>
+        <th>Título del libro</th>
+        <th>Préstamo</th>
+        <th>Devolución</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody id="tablaRegistros"></tbody>
+  </table>
+
+  <script>
+    const registros = JSON.parse(localStorage.getItem("prestamosLibros")) || [];
+    const tabla = document.getElementById("tablaRegistros");
+
+    if (registros.length === 0) {
+      tabla.innerHTML = "<tr><td colspan='7'>No hay registros disponibles.</td></tr>";
+    } else {
+      registros.forEach(reg => {
+        const fila = document.createElement("tr");
+        fila.innerHTML = `
+          <td data-label="Nombre">${reg.nombre}</td>
+          <td data-label="Carrera">${reg.carrera}</td>
+          <td data-label="Nivel">${reg.nivel}</td>
+          <td data-label="Título del libro">${reg.titulo}</td>
+          <td data-label="Préstamo">${reg.prestamo}</td>
+          <td data-label="Devolución">${reg.devolucion}</td>
+          <td data-label="Estado">${reg.estado}</td>
+        `;
+        tabla.appendChild(fila);
+      });
+    }
+  </script>
+
+</body>
+</html>
