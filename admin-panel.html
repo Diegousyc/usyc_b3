@@ -4,18 +4,16 @@
   <meta charset="UTF-8">
   <title>Panel de Administración</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CORREGIDA: Versión estable de SheetJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
       margin: 0;
       background: #f1f1f1;
     }
-
     .header {
       display: flex;
       justify-content: space-between;
@@ -23,26 +21,28 @@
       flex-wrap: wrap;
       gap: 10px;
     }
-
-    h2 {
-      margin: 0;
-    }
-
-    .salir-btn {
-      background-color: #dc3545;
-      color: white;
-      border: none;
+    h2 { margin: 0; }
+    .btn {
       padding: 10px 15px;
       font-size: 14px;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
+      color: white;
     }
-
+    .salir-btn {
+      background-color: #dc3545;
+    }
     .salir-btn:hover {
       background-color: #c82333;
     }
-
+    .excel-btn {
+      background-color: #28a745;
+    }
+    .excel-btn:hover {
+      background-color: #218838;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -50,32 +50,24 @@
       margin-top: 20px;
       overflow-x: auto;
     }
-
     th, td {
       border: 1px solid #ddd;
       padding: 10px;
       text-align: left;
       font-size: 14px;
     }
-
     th {
       background-color: #007bff;
       color: white;
     }
-
     tr:nth-child(even) {
       background-color: #f9f9f9;
     }
-
     @media (max-width: 768px) {
       table, thead, tbody, th, td, tr {
         display: block;
       }
-
-      thead {
-        display: none;
-      }
-
+      thead { display: none; }
       tr {
         margin-bottom: 15px;
         background: white;
@@ -84,14 +76,12 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         padding: 10px;
       }
-
       td {
         border: none;
         padding: 8px 10px;
         position: relative;
         text-align: left;
       }
-
       td::before {
         content: attr(data-label);
         font-weight: bold;
@@ -106,7 +96,10 @@
 
   <div class="header">
     <h2>Registros de Préstamo</h2>
-    <button class="salir-btn" onclick="window.location.href='index.html'">Salir</button>
+    <div>
+      <button class="btn excel-btn" onclick="descargarExcel()">Descargar Excel</button>
+      <button class="btn salir-btn" onclick="window.location.href='index.html'">Salir</button>
+    </div>
   </div>
 
   <table>
@@ -144,6 +137,19 @@
         `;
         tabla.appendChild(fila);
       });
+    }
+
+    function descargarExcel() {
+      if (registros.length === 0) {
+        alert("No hay registros para exportar.");
+        return;
+      }
+
+      const worksheet = XLSX.utils.json_to_sheet(registros);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Registros");
+
+      XLSX.writeFile(workbook, "registros_prestamos.xlsx");
     }
   </script>
 
